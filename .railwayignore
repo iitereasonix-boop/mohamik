@@ -1,0 +1,8 @@
+pgsql
+*.log
+.env
+.env.*
+!.env.example
+.next
+node_modules
+tsconfig.tsbuildinfo

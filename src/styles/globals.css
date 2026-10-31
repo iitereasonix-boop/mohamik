@@ -1,0 +1,348 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --ink: #14213d;
+  --burgundy: #6b1e2e;
+  --gold: #b08d57;
+  --paper: #f7f4ee;
+  --status-hearing: #b45309;
+  --status-overdue: #b91c1c;
+  --status-ok: #15803d;
+  --status-info: #1d4ed8;
+}
+
+.dark {
+  --ink: #0d1526;
+  --burgundy: #8a2b3d;
+  --gold: #c9a57a;
+  --paper: #12161d;
+}
+
+@layer components {
+  .card {
+    @apply rounded-lg border border-gray-200 bg-white p-4 shadow-sm;
+  }
+  .btn-primary {
+    @apply rounded-md bg-burgundy px-4 py-2 font-semibold text-white transition hover:bg-burgundy-50 focus:outline-none focus:ring-2 focus:ring-burgundy/40;
+  }
+  .btn-secondary {
+    @apply rounded-md border border-ink-200 bg-white px-4 py-2 font-semibold text-ink transition hover:bg-paper-100;
+  }
+  .input {
+    @apply w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm outline-none focus:border-gold focus:ring-1 focus:ring-gold;
+  }
+  .badge {
+    @apply inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold;
+  }
+  .sidebar-link {
+    @apply flex items-center gap-2 rounded-md px-3 py-2 text-sm text-paper-100 transition hover:bg-ink-100;
+  }
+  .sidebar-link-active {
+    @apply bg-burgundy text-white;
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* Shared helpers referenced across pages                              */
+/* ------------------------------------------------------------------ */
+.tnum {
+  font-variant-numeric: tabular-nums;
+}
+.gold-rule {
+  height: 2px;
+  width: 3.5rem;
+  border-radius: 9999px;
+  background: linear-gradient(90deg, #8a6a32, #e9d3a1, #b08d57);
+}
+
+/* ------------------------------------------------------------------ */
+/* "Obsidian & Gold" – public marketing surfaces                       */
+/* ------------------------------------------------------------------ */
+.lux {
+  --lux-bg: #0a1428;
+  --lux-bg-2: #0f1c36;
+  --lux-ivory: #f4efe6;
+  --lux-muted: #a39d93;
+  --lux-gold: #d4af6a;
+  --lux-gold-soft: #f1dfb3;
+  --lux-gold-deep: #8a6a32;
+  background-color: var(--lux-bg);
+  color: var(--lux-ivory);
+}
+
+.text-gold {
+  background: linear-gradient(100deg, #8a6a32 0%, #e9d3a1 22%, #fff4d6 38%, #c9a15a 55%, #f1dfb3 75%, #8a6a32 100%);
+  background-size: 220% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: lux-sheen 7s linear infinite;
+}
+
+.bg-gold {
+  background: linear-gradient(120deg, #a07b3c 0%, #e9d3a1 35%, #fff1cc 50%, #c9a15a 70%, #9a7436 100%);
+  background-size: 200% auto;
+  color: #17120a;
+  transition: background-position 0.6s ease, transform 0.25s ease, box-shadow 0.25s ease;
+  box-shadow: 0 10px 30px -10px rgb(212 175 106 / 0.55), inset 0 1px 0 rgb(255 255 255 / 0.5);
+}
+.bg-gold:hover {
+  background-position: 100% center;
+  transform: translateY(-2px);
+  box-shadow: 0 18px 40px -12px rgb(212 175 106 / 0.7), inset 0 1px 0 rgb(255 255 255 / 0.5);
+}
+
+/* 1px gradient hairline around any rounded element */
+:where(.lux-frame) {
+  position: relative;
+}
+.lux-frame::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(150deg, rgb(241 223 179 / 0.55), rgb(255 255 255 / 0.06) 35%, rgb(255 255 255 / 0.03) 65%, rgb(212 175 106 / 0.4));
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+.lux-glass {
+  background-image: linear-gradient(160deg, rgb(255 255 255 / 0.065), rgb(255 255 255 / 0.015));
+  backdrop-filter: blur(18px) saturate(140%);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+}
+
+/* film grain */
+.lux-grain::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.07;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* soft geometric lattice inspired by Arabic tiling */
+.lux-lattice {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='96' height='96' viewBox='0 0 96 96'%3E%3Cg fill='none' stroke='%23d4af6a' stroke-width='.6'%3E%3Crect x='28' y='28' width='40' height='40'/%3E%3Crect x='28' y='28' width='40' height='40' transform='rotate(45 48 48)'/%3E%3Ccircle cx='48' cy='48' r='9'/%3E%3Cpath d='M0 0l28 28M96 0L68 28M0 96l28-28M96 96L68 68'/%3E%3C/g%3E%3C/svg%3E");
+  background-size: 96px 96px;
+}
+
+/* cursor-follow spotlight on cards (driven by --mx / --my) */
+:where(.lux-spot) {
+  position: relative;
+}
+.lux-spot {
+  isolation: isolate;
+}
+.lux-spot::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 50%), rgb(212 175 106 / 0.13), transparent 60%);
+}
+.lux-spot:hover::after {
+  opacity: 1;
+}
+
+/* scroll reveal */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  filter: blur(6px);
+  transition: opacity 0.9s cubic-bezier(0.2, 0.7, 0.2, 1), transform 0.9s cubic-bezier(0.2, 0.7, 0.2, 1), filter 0.9s ease;
+  transition-delay: var(--d, 0ms);
+}
+.reveal.is-in {
+  opacity: 1;
+  transform: none;
+  filter: none;
+}
+
+.lux-marquee {
+  display: flex;
+  width: max-content;
+  animation: lux-marquee 38s linear infinite;
+}
+.lux-marquee:hover {
+  animation-play-state: paused;
+}
+
+.lux-spin {
+  animation: lux-spin 60s linear infinite;
+}
+.lux-spin-rev {
+  animation: lux-spin 90s linear infinite reverse;
+}
+.lux-float {
+  animation: lux-float 7s ease-in-out infinite;
+}
+.lux-float-late {
+  animation: lux-float 8s ease-in-out 1.5s infinite;
+}
+.lux-aurora {
+  animation: lux-aurora 16s ease-in-out infinite alternate;
+}
+.lux-pulse-dot {
+  animation: lux-pulse 2.4s ease-out infinite;
+}
+.lux-draw {
+  stroke-dasharray: 600;
+  stroke-dashoffset: 600;
+  animation: lux-draw 2.8s 0.4s cubic-bezier(0.6, 0, 0.2, 1) forwards;
+}
+
+details.lux-faq summary::-webkit-details-marker {
+  display: none;
+}
+details.lux-faq[open] .lux-faq-icon {
+  transform: rotate(45deg);
+}
+
+@keyframes lux-sheen {
+  to {
+    background-position: -220% center;
+  }
+}
+@keyframes lux-marquee {
+  to {
+    transform: translateX(50%);
+  }
+}
+@keyframes lux-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes lux-float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-12px);
+  }
+}
+@keyframes lux-aurora {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  100% {
+    transform: translate3d(-6%, 4%, 0) scale(1.15);
+  }
+}
+@keyframes lux-pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgb(52 211 153 / 0.6);
+  }
+  100% {
+    box-shadow: 0 0 0 10px rgb(52 211 153 / 0);
+  }
+}
+@keyframes lux-draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .text-gold,
+  .lux-marquee,
+  .lux-spin,
+  .lux-spin-rev,
+  .lux-float,
+  .lux-float-late,
+  .lux-aurora,
+  .lux-pulse-dot {
+    animation: none;
+  }
+  .lux-draw {
+    animation: none;
+    stroke-dashoffset: 0;
+  }
+  .reveal {
+    opacity: 1;
+    transform: none;
+    filter: none;
+    transition: none;
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* Client portal forms (light surface)                                 */
+/* ------------------------------------------------------------------ */
+.portal-form .card {
+  border: 0;
+  padding: 0;
+  box-shadow: none;
+  background: transparent;
+}
+.portal-form label {
+  color: #0f1c36;
+}
+.portal-form .input,
+.portal-form input:not([type="checkbox"]):not([type="radio"]),
+.portal-form select,
+.portal-form textarea {
+  width: 100%;
+  border-radius: 0.85rem;
+  border: 1px solid #e2d8c5;
+  background: #fff;
+  padding: 0.75rem 1rem;
+  font-size: 0.95rem;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.portal-form .input:focus,
+.portal-form input:focus,
+.portal-form select:focus,
+.portal-form textarea:focus {
+  border-color: #b08d57;
+  box-shadow: 0 0 0 4px rgb(212 175 106 / 0.18);
+}
+.portal-form .btn-primary,
+.portal-form button[type="submit"] {
+  border-radius: 0.85rem;
+  background: #0f1c36;
+  color: #f1dfb3;
+  padding: 0.9rem 1.25rem;
+  font-weight: 700;
+  transition: background 0.2s, transform 0.2s;
+}
+.portal-form .btn-primary:hover,
+.portal-form button[type="submit"]:hover {
+  background: #13234a;
+  transform: translateY(-1px);
+}
+.portal-form .bg-burgundy {
+  background: #0f1c36;
+  color: #f1dfb3;
+}
+
+/* «حُكم» robot */
+.hukm-eyes {
+  transform-origin: 60px 48px;
+  animation: hukm-blink 5s infinite;
+}
+@keyframes hukm-blink {
+  0%, 94%, 100% {
+    transform: scaleY(1);
+  }
+  97% {
+    transform: scaleY(0.1);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hukm-eyes {
+    animation: none;
+  }
+}
