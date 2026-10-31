@@ -80,7 +80,10 @@ export default async function AdminClientFilePage({ params }: { params: { id: st
 
       <div className="mt-5 grid gap-5 lg:grid-cols-[1fr_320px] lg:items-start">
         <div className="space-y-4">
-          <h2 className="text-lg font-bold">القضايا ({client.cases.length})</h2>
+          <div className="flex items-center justify-between gap-3">
+            <h2 className="text-lg font-bold">القضايا ({client.cases.length})</h2>
+            {can(ctx.role, "case.edit") && <Link href={`/admin/cases/new?client=${params.id}`} className="text-sm font-semibold text-[#9a7436] hover:underline">إضافة قضية</Link>}
+          </div>
           {client.cases.length === 0 && <p className="rounded-2xl border border-dashed border-slate-300 bg-white p-6 text-center text-sm text-warmgray-500">لا توجد قضايا لهذا العميل.</p>}
           {client.cases.map((c, i) => {
             return (

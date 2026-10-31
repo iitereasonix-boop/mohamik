@@ -1,4 +1,6 @@
 import Link from "next/link";
+import { Plus } from "lucide-react";
+import { can } from "@/lib/permissions";
 import { withTenant } from "@/lib/tenant";
 import { guardSection } from "@/lib/admin-access";
 
@@ -38,7 +40,12 @@ export default async function AdminCasesPage() {
 
   return (
     <div className="mx-auto max-w-5xl">
-      <h1 className="text-2xl font-bold">القضايا</h1>
+      <div className="flex items-center justify-between gap-3">
+        <h1 className="text-2xl font-bold">القضايا</h1>
+        {can(ctx.role, "case.edit") && (
+          <Link href="/admin/cases/new" className="btn-primary inline-flex items-center gap-2"><Plus size={16} /> إضافة قضية</Link>
+        )}
+      </div>
       {cases.length === 0 ? (
         <p className="mt-4 text-sm text-warmgray-500">لا توجد قضايا بعد.</p>
       ) : (

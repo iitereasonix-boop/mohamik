@@ -58,7 +58,7 @@ export default function CaseDetails({ c }: { c: CaseData }) {
     ))}
   </dl>
 
-  {c.clientSummary && <Block title="وقائع العميل" icon={<FileText size={15} />}><p className="whitespace-pre-line rounded-xl bg-[#fbf9f4] p-3 text-sm leading-7">{c.clientSummary}</p></Block>}
+  {c.clientSummary && <Block title="نص القضية ووقائعها" icon={<FileText size={15} />}><p className="whitespace-pre-line rounded-xl bg-[#fbf9f4] p-3 text-sm leading-7">{c.clientSummary}</p></Block>}
   {outcome.length > 0 && <Block title="النتيجة" icon={<Landmark size={15} />}><ul className="space-y-1 rounded-xl bg-[#fbf9f4] p-3 text-sm leading-7">{outcome.map((o) => <li key={o}>{o}</li>)}</ul></Block>}
 
   <Block title="الجلسات" icon={<Gavel size={15} />} count={c.hearings.length}>
