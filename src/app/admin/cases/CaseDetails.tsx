@@ -10,7 +10,7 @@ export const caseSelect = (showNotes: boolean) => ({
   hearings: { orderBy: { date: "desc" }, select: { id: true, date: true, court: true, room: true, purpose: true, outcome: true, nextDate: true } },
   deadlines: { orderBy: { dueDate: "asc" }, select: { id: true, kind: true, dueDate: true, description: true, completed: true } },
   timeline: { orderBy: { eventDate: "desc" }, select: { id: true, title: true, description: true, eventDate: true } },
-  documents: { orderBy: { createdAt: "desc" }, select: { id: true, title: true, folder: true, visibleToClient: true, createdAt: true } },
+  documents: { orderBy: { createdAt: "desc" }, select: { id: true, title: true, folder: true, visibleToClient: true, createdAt: true, storageKey: true } },
   clientUpdates: { orderBy: { createdAt: "desc" }, select: { id: true, body: true, approved: true, sentAt: true, createdAt: true } },
   tasks: { orderBy: { createdAt: "desc" }, select: { id: true, title: true, status: true, dueDate: true, assignee: { select: { name: true } } } },
   notes: { orderBy: { createdAt: "desc" }, take: showNotes ? 50 : 0, select: { id: true, body: true, createdAt: true, createdByUser: { select: { name: true } } } },
@@ -21,7 +21,7 @@ type CaseData = Prisma.CaseGetPayload<{ select: ReturnType<typeof caseSelect> }>
 export const ROLE_AR: Record<string, string> = { PLAINTIFF: "مدّعٍ", DEFENDANT: "مدّعى عليه", COMPLAINANT: "مشتكٍ", ACCUSED: "مشتكى عليه", OTHER: "أخرى" };
 const PURPOSE_AR: Record<string, string> = { FIRST_SESSION: "جلسة أولى", PLEADINGS: "مرافعة", EVIDENCE: "بيّنات", ARGUMENTS: "مرافعات ختامية", JUDGMENT: "نطق بالحكم", OTHER: "أخرى" };
 const DEADLINE_AR: Record<string, string> = { APPEAL: "استئناف", OBJECTION: "اعتراض", DOCUMENT_SUBMISSION: "تقديم مستندات", LIMITATION_PERIOD: "تقادم", OTHER: "أخرى" };
-const FOLDER_AR: Record<string, string> = { PLEADINGS: "لوائح", EVIDENCE: "بيّنات", COURT_DECISIONS: "قرارات المحكمة", CORRESPONDENCE: "مراسلات", IDS: "هويات", OTHER: "أخرى" };
+export const FOLDER_AR: Record<string, string> = { PLEADINGS: "لوائح", EVIDENCE: "بيّنات", COURT_DECISIONS: "قرارات المحكمة", CORRESPONDENCE: "مراسلات", IDS: "هويات", OTHER: "أخرى" };
 const TASK_AR: Record<string, string> = { TODO: "للتنفيذ", IN_PROGRESS: "قيد التنفيذ", DONE: "منجزة", CANCELLED: "ملغاة" };
 
 const money = (v: { toString(): string } | null) => (v ? `${Number(v.toString()).toLocaleString("en-US")} دينار` : null);
@@ -97,7 +97,7 @@ export default function CaseDetails({ c }: { c: CaseData }) {
       <ul className="space-y-1.5 text-sm">
         {c.documents.map((d) => (
           <li key={d.id} className="flex flex-wrap items-center justify-between gap-2 rounded-lg bg-[#fbf9f4] px-3 py-2">
-            <span className="font-medium">{d.title}</span>
+            {d.storageKey.startsWith("asset:") ? <a href={`/api/documents/${d.id}`} className="font-medium text-[#9a7436] hover:underline">{d.title}</a> : <span className="font-medium">{d.title}</span>}
             <span className="text-xs text-warmgray-500">{FOLDER_AR[d.folder] ?? d.folder} · {fmtDate(d.createdAt)} · {d.visibleToClient ? "مشترك مع العميل" : "داخلي"}</span>
           </li>
         ))}

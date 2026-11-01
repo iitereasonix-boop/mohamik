@@ -34,7 +34,7 @@ export default async function PortalCaseDetailPage({ params }: { params: { subdo
         documents: {
           where: { visibleToClient: true },
           orderBy: { createdAt: "desc" },
-          select: { id: true, title: true, mimeType: true, createdAt: true },
+          select: { id: true, title: true, mimeType: true, createdAt: true, storageKey: true },
         },
         clientUpdates: {
           where: { approved: true },
@@ -179,7 +179,11 @@ export default async function PortalCaseDetailPage({ params }: { params: { subdo
                   <li key={d.id} className="flex items-center gap-3 rounded-2xl border border-[#0f1c36]/[0.06] p-3.5">
                     <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#f7f1e4] text-[#9a7436]"><FileText size={18} /></span>
                     <span className="min-w-0 flex-1">
-                      <span className="block truncate text-sm font-semibold">{d.title}</span>
+                      {d.storageKey.startsWith("asset:") ? (
+                        <a href={`/api/documents/${d.id}`} className="block truncate text-sm font-semibold text-[#9a7436] hover:underline">{d.title}</a>
+                      ) : (
+                        <span className="block truncate text-sm font-semibold">{d.title}</span>
+                      )}
                       <span className="tnum block text-xs text-[#0f1c36]/45">{fmtDate(d.createdAt)}</span>
                     </span>
                   </li>

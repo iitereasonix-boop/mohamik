@@ -9,7 +9,7 @@ export async function GET(_request: Request, { params }: { params: { subdomain: 
 
   const asset = await withTenant(firm.id, (tx) =>
     tx.tenantAsset.findFirst({
-      where: { id: params.id, tenantId: firm.id },
+      where: { id: params.id, tenantId: firm.id, kind: { in: ["LOGO", "COVER", "BACKGROUND"] } },
       select: { data: true, mimeType: true },
     })
   );

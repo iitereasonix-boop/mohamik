@@ -6,6 +6,7 @@ import { can } from "@/lib/permissions";
 import { STAGE_AR, STATUS_AR, TYPE_AR, statusTone } from "@/lib/portal";
 import { withTenant } from "@/lib/tenant";
 import CaseDetails, { ROLE_AR, caseSelect } from "../CaseDetails";
+import CaseUpdateForm from "./CaseUpdateForm";
 
 export const dynamic = "force-dynamic";
 
@@ -36,6 +37,8 @@ export default async function AdminCasePage({ params }: { params: { id: string }
           <span className={`rounded-full px-3 py-1 text-xs font-semibold ring-1 ring-inset ${statusTone(kase.status)}`}>{STATUS_AR[kase.status] ?? kase.status}</span>
         </div>
       </header>
+
+      {can(ctx.role, "case.edit") && <CaseUpdateForm caseId={params.id} />}
 
       <div className="mt-5 rounded-2xl border border-slate-200 bg-white p-5 sm:p-6">
         <CaseDetails c={kase} />
